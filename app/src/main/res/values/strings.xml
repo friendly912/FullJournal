@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FullJournal</string>
+
+    <string name="nav_schedule">日程管理</string>
+    <string name="nav_records">記録帳</string>
+
+    <string name="schedule_edit_title">予定の編集</string>
+    <string name="table_edit_title">表の作成</string>
+    <string name="data_entry_title">データ入力</string>
+    <string name="statistics_title">統計</string>
+    <string name="settings_title">設定</string>
+
+    <string name="action_add">追加</string>
+    <string name="action_save">保存</string>
+    <string name="action_delete">削除</string>
+    <string name="action_edit">記録を編集</string>
+    <string name="action_use_template">テンプレートから作成</string>
+    <string name="action_statistics">統計を見る</string>
+    <string name="action_settings">設定</string>
+
+    <string name="hint_title">タイトル</string>
+    <string name="hint_description">メモ</string>
+    <string name="hint_table_name">表の名前(例: 体重表)</string>
+    <string name="hint_column_name">列名</string>
+    <string name="hint_choice_options">選択肢(カンマ区切り)</string>
+    <string name="hint_reminder_minutes">既定のリマインダー(分前)</string>
+    <string name="hint_theme">テーマ</string>
+
+    <string name="label_all_day">終日</string>
+    <string name="label_reminder">リマインダー</string>
+    <string name="label_repeat">繰り返し</string>
+    <string name="label_column_type">種類</string>
+    <string name="label_record_date">記録日</string>
+
+    <string name="column_type_number">数値</string>
+    <string name="column_type_date">日付</string>
+    <string name="column_type_text">テキスト</string>
+    <string name="column_type_choice">選択肢</string>
+
+    <string name="empty_schedule">この日の予定はありません</string>
+    <string name="empty_records">まだ表がありません。右下の+から作成してください</string>
+    <string name="empty_rows">まだ記録がありません</string>
+
+    <string name="stats_sum">合計: %s</string>
+    <string name="stats_avg">平均: %s</string>
+    <string name="stats_min">最小: %s</string>
+    <string name="stats_max">最大: %s</string>
+    <string name="stats_anomaly_high">%1$s は平均より大幅に多い値です(直近: %2$s)</string>
+    <string name="stats_anomaly_low">%1$s は平均より大幅に少ない値です(直近: %2$s)</string>
+    <string name="stats_no_anomaly">直近の値に大きな異常は見られません</string>
+    <string name="stats_no_data">統計を表示するにはデータが必要です</string>
+
+    <string name="dialog_add_column_title">列を追加</string>
+    <string name="dialog_add_row_title">記録を追加</string>
+
+    <string-array name="reminder_options">
+        <item>なし</item>
+        <item>5分前</item>
+        <item>15分前</item>
+        <item>30分前</item>
+        <item>1時間前</item>
+        <item>1日前</item>
+    </string-array>
+
+    <string-array name="repeat_options">
+        <item>なし</item>
+        <item>毎日</item>
+        <item>毎週</item>
+        <item>毎月</item>
+    </string-array>
+
+    <string-array name="theme_options">
+        <item>システム設定に従う</item>
+        <item>ライト</item>
+        <item>ダーク</item>
+    </string-array>
+
+    <string-array name="column_type_options">
+        <item>@string/column_type_number</item>
+        <item>@string/column_type_date</item>
+        <item>@string/column_type_text</item>
+        <item>@string/column_type_choice</item>
+    </string-array>
+</resources>
