@@ -29,11 +29,13 @@ import java.util.concurrent.Executors;
                 RecordRow.class,
                 RecordValue.class
         },
-        version = 1,
+        version = 2,
         exportSchema = false
 )
 @TypeConverters(Converters.class)
 public abstract class AppDatabase extends RoomDatabase {
+
+    public static final String DATABASE_NAME = "fulljournal.db";
 
     private static volatile AppDatabase instance;
 
@@ -53,14 +55,27 @@ public abstract class AppDatabase extends RoomDatabase {
         if (instance == null) {
             synchronized (AppDatabase.class) {
                 if (instance == null) {
-                    instance = Room.databaseBuilder(
-                                    context.getApplicationContext(),
-                                    AppDatabase.class,
-                                    "fulljournal.db")
-                            .build();
+                    instance = build(context);
                 }
             }
         }
         return instance;
+    }
+
+    private static AppDatabase build(Context context) {
+        // No formal migrations yet; a schema bump clears local data rather than crashing.
+        return Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
+                .fallbackToDestructiveMigration()
+                .build();
+    }
+
+    /** Closes the current instance and drops the singleton so the next getInstance() reopens the file fresh. */
+    public static void closeAndReset() {
+        synchronized (AppDatabase.class) {
+            if (instance != null) {
+                instance.close();
+                instance = null;
+            }
+        }
     }
 }

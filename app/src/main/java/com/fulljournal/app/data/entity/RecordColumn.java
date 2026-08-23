@@ -34,4 +34,8 @@ public class RecordColumn {
     /** Comma separated options, only used when type == CHOICE. */
     @Nullable
     public String choiceOptions;
+
+    /** Optional target value, only used when type == NUMBER. Progress shown as latest value / goalValue. */
+    @Nullable
+    public Double goalValue;
 }

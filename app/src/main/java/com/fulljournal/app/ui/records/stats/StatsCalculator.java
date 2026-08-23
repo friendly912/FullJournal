@@ -47,6 +47,7 @@ public class StatsCalculator {
                     continue;
                 }
                 allValues.add(value);
+                stats.latestValue = value;
 
                 String monthKey = DateUtil.monthKey(row.recordDate);
                 Double existing = monthlySum.get(monthKey);

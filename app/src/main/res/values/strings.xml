@@ -16,16 +16,27 @@
     <string name="action_delete">削除</string>
     <string name="action_edit">記録を編集</string>
     <string name="action_use_template">テンプレートから作成</string>
+    <string name="action_backup">バックアップを作成</string>
+    <string name="action_restore">データを復元</string>
+    <string name="msg_backup_success">バックアップを保存しました</string>
+    <string name="msg_backup_failed">バックアップに失敗しました</string>
+    <string name="msg_restore_confirm">復元すると現在のデータは上書きされます。続行しますか?</string>
+    <string name="msg_restore_failed">復元に失敗しました</string>
     <string name="action_statistics">統計を見る</string>
     <string name="action_settings">設定</string>
+    <string name="action_search">検索</string>
 
     <string name="hint_title">タイトル</string>
     <string name="hint_description">メモ</string>
     <string name="hint_table_name">表の名前(例: 体重表)</string>
     <string name="hint_column_name">列名</string>
     <string name="hint_choice_options">選択肢(カンマ区切り)</string>
+    <string name="hint_goal_value">目標値(任意)</string>
     <string name="hint_reminder_minutes">既定のリマインダー(分前)</string>
     <string name="hint_theme">テーマ</string>
+    <string name="hint_search">予定・記録を検索</string>
+    <string name="search_result_schedule_prefix">予定</string>
+    <string name="search_result_table_prefix">表</string>
 
     <string name="label_all_day">終日</string>
     <string name="label_reminder">リマインダー</string>
@@ -50,6 +61,7 @@
     <string name="stats_anomaly_low">%1$s は平均より大幅に少ない値です(直近: %2$s)</string>
     <string name="stats_no_anomaly">直近の値に大きな異常は見られません</string>
     <string name="stats_no_data">統計を表示するにはデータが必要です</string>
+    <string name="stats_goal_progress">現在: %1$s / 目標: %2$s (%3$d%%)</string>
 
     <string name="dialog_add_column_title">列を追加</string>
     <string name="dialog_add_row_title">記録を追加</string>

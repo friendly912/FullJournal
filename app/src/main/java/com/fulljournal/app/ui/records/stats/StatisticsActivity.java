@@ -84,6 +84,9 @@ public class StatisticsActivity extends BaseToolbarActivity {
         TextView title = section.findViewById(R.id.text_column_title);
         TextView summary = section.findViewById(R.id.text_summary_stats);
         TextView anomaly = section.findViewById(R.id.text_anomaly);
+        View goalLayout = section.findViewById(R.id.layout_goal_progress);
+        TextView goalText = section.findViewById(R.id.text_goal_progress);
+        android.widget.ProgressBar goalProgress = section.findViewById(R.id.progress_goal);
         LineChart chart = section.findViewById(R.id.line_chart);
 
         title.setText(stats.column.name);
@@ -102,6 +105,17 @@ public class StatisticsActivity extends BaseToolbarActivity {
             anomaly.setText(getString(messageRes, stats.latestMonthLabel, format(stats.latestMonthValue)));
         } else {
             anomaly.setVisibility(View.GONE);
+        }
+
+        if (stats.column.goalValue != null && stats.column.goalValue != 0) {
+            goalLayout.setVisibility(View.VISIBLE);
+            double goal = stats.column.goalValue;
+            int percent = (int) Math.round(stats.latestValue / goal * 100);
+            goalText.setText(getString(R.string.stats_goal_progress,
+                    format(stats.latestValue), format(goal), percent));
+            goalProgress.setProgress(Math.max(0, Math.min(100, percent)));
+        } else {
+            goalLayout.setVisibility(View.GONE);
         }
 
         bindChart(chart, stats);

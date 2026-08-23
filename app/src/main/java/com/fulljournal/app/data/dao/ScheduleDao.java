@@ -37,4 +37,8 @@ public interface ScheduleDao {
 
     @Query("SELECT * FROM schedule_event WHERE allDay = 0 AND reminderMinutesBefore >= 0 AND startAt > :now")
     List<ScheduleEvent> getFutureWithReminder(long now);
+
+    @Query("SELECT * FROM schedule_event WHERE title LIKE '%' || :query || '%' " +
+            "OR description LIKE '%' || :query || '%' ORDER BY startAt DESC")
+    List<ScheduleEvent> search(String query);
 }

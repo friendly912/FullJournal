@@ -90,11 +90,14 @@ public class TableEditActivity extends BaseToolbarActivity {
         Spinner spinnerType = dialogView.findViewById(R.id.spinner_column_type);
         TextInputLayout layoutChoiceOptions = dialogView.findViewById(R.id.layout_choice_options);
         EditText inputChoiceOptions = dialogView.findViewById(R.id.input_choice_options);
+        TextInputLayout layoutGoalValue = dialogView.findViewById(R.id.layout_goal_value);
+        EditText inputGoalValue = dialogView.findViewById(R.id.input_goal_value);
 
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 layoutChoiceOptions.setVisibility(TYPES[position] == ColumnType.CHOICE ? View.VISIBLE : View.GONE);
+                layoutGoalValue.setVisibility(TYPES[position] == ColumnType.NUMBER ? View.VISIBLE : View.GONE);
             }
 
             @Override
@@ -115,6 +118,16 @@ public class TableEditActivity extends BaseToolbarActivity {
                     column.sortOrder = columnAdapter.getColumns().size();
                     if (column.type == ColumnType.CHOICE) {
                         column.choiceOptions = inputChoiceOptions.getText().toString().trim();
+                    }
+                    if (column.type == ColumnType.NUMBER) {
+                        String goalText = inputGoalValue.getText().toString().trim();
+                        if (!goalText.isEmpty()) {
+                            try {
+                                column.goalValue = Double.parseDouble(goalText);
+                            } catch (NumberFormatException ignored) {
+                                // leave unset
+                            }
+                        }
                     }
                     columnAdapter.add(column);
                 })

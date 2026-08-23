@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.fulljournal.app.ui.records.RecordsFragment;
 import com.fulljournal.app.ui.schedule.ScheduleFragment;
+import com.fulljournal.app.ui.search.SearchActivity;
 import com.fulljournal.app.ui.settings.SettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -77,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_search) {
+            startActivity(new Intent(this, SearchActivity.class));
+            return true;
+        }
         if (item.getItemId() == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;

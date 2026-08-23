@@ -47,6 +47,11 @@
             android:exported="false"
             android:label="@string/settings_title" />
 
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false"
+            android:label="@string/action_search" />
+
         <receiver
             android:name=".util.ReminderReceiver"
             android:exported="false" />

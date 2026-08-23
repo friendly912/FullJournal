@@ -24,4 +24,7 @@ public interface RecordTableDao {
 
     @Query("SELECT * FROM record_table WHERE id = :id")
     RecordTable getById(long id);
+
+    @Query("SELECT * FROM record_table WHERE name LIKE '%' || :query || '%'")
+    List<RecordTable> search(String query);
 }

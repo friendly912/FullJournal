@@ -15,6 +15,9 @@ public class ColumnStats {
     public double thisWeekSum;
     public double thisMonthSum;
 
+    /** The most recently recorded raw value (by recordDate), used against column.goalValue for progress. */
+    public double latestValue;
+
     /** Chronologically ordered month key ("yyyy-MM") -> sum of values recorded that month. */
     public final Map<String, Double> monthlyTotals = new LinkedHashMap<>();
 
