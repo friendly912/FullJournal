@@ -20,16 +20,16 @@ public class RecordTableAdapter extends RecyclerView.Adapter<RecordTableAdapter.
         void onTableClick(RecordTable table);
     }
 
-    private final List<RecordTable> tables = new ArrayList<>();
+    private final List<TableListItem> items = new ArrayList<>();
     private final OnTableClickListener listener;
 
     public RecordTableAdapter(OnTableClickListener listener) {
         this.listener = listener;
     }
 
-    public void submitList(List<RecordTable> newTables) {
-        tables.clear();
-        tables.addAll(newTables);
+    public void submitList(List<TableListItem> newItems) {
+        items.clear();
+        items.addAll(newItems);
         notifyDataSetChanged();
     }
 
@@ -43,22 +43,31 @@ public class RecordTableAdapter extends RecyclerView.Adapter<RecordTableAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RecordTable table = tables.get(position);
-        holder.name.setText(table.name);
-        holder.name.setOnClickListener(v -> listener.onTableClick(table));
+        TableListItem item = items.get(position);
+        holder.name.setText(item.table.name);
+        if (item.gapInfo.overdue) {
+            holder.reminder.setVisibility(View.VISIBLE);
+            holder.reminder.setText(holder.itemView.getContext()
+                    .getString(R.string.record_gap_warning, item.gapInfo.daysSinceLastRecord));
+        } else {
+            holder.reminder.setVisibility(View.GONE);
+        }
+        holder.itemView.setOnClickListener(v -> listener.onTableClick(item.table));
     }
 
     @Override
     public int getItemCount() {
-        return tables.size();
+        return items.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView name;
+        final TextView reminder;
 
         ViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.text_name);
+            reminder = itemView.findViewById(R.id.text_reminder);
         }
     }
 }

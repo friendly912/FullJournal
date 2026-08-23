@@ -70,6 +70,11 @@ public class StatisticsActivity extends BaseToolbarActivity {
         }
         noDataView.setVisibility(View.GONE);
 
+        View summarySection = buildSummarySection(container, columnStats);
+        if (summarySection != null) {
+            container.addView(summarySection);
+        }
+
         for (ColumnStats stats : columnStats) {
             container.addView(buildColumnSection(container, stats));
         }
@@ -78,12 +83,43 @@ public class StatisticsActivity extends BaseToolbarActivity {
         }
     }
 
+    /** Rule-based natural-language recap: month-over-month change plus goal progress, per numeric column. */
+    @Nullable
+    private View buildSummarySection(android.widget.LinearLayout parent, List<ColumnStats> columnStats) {
+        List<String> lines = new ArrayList<>();
+        for (ColumnStats stats : columnStats) {
+            if (stats.hasMonthOverMonthChange) {
+                double percent = stats.monthOverMonthChangePercent;
+                if (Math.abs(percent) < 1) {
+                    lines.add(getString(R.string.stats_summary_flat, stats.column.name));
+                } else if (percent > 0) {
+                    lines.add(getString(R.string.stats_summary_increase, stats.column.name, Math.round(percent)));
+                } else {
+                    lines.add(getString(R.string.stats_summary_decrease, stats.column.name, Math.round(-percent)));
+                }
+            }
+            if (stats.column.goalValue != null && stats.column.goalValue != 0) {
+                int percent = (int) Math.round(stats.latestValue / stats.column.goalValue * 100);
+                lines.add(getString(R.string.stats_summary_goal, stats.column.name, percent));
+            }
+        }
+        if (lines.isEmpty()) {
+            return null;
+        }
+
+        View section = LayoutInflater.from(this).inflate(R.layout.item_stats_summary, parent, false);
+        TextView body = section.findViewById(R.id.text_summary_body);
+        body.setText(String.join("\n", lines));
+        return section;
+    }
+
     private View buildColumnSection(android.widget.LinearLayout parent, ColumnStats stats) {
         View section = LayoutInflater.from(this).inflate(R.layout.item_stat_column, parent, false);
 
         TextView title = section.findViewById(R.id.text_column_title);
         TextView summary = section.findViewById(R.id.text_summary_stats);
         TextView anomaly = section.findViewById(R.id.text_anomaly);
+        TextView prediction = section.findViewById(R.id.text_prediction);
         View goalLayout = section.findViewById(R.id.layout_goal_progress);
         TextView goalText = section.findViewById(R.id.text_goal_progress);
         android.widget.ProgressBar goalProgress = section.findViewById(R.id.progress_goal);
@@ -105,6 +141,13 @@ public class StatisticsActivity extends BaseToolbarActivity {
             anomaly.setText(getString(messageRes, stats.latestMonthLabel, format(stats.latestMonthValue)));
         } else {
             anomaly.setVisibility(View.GONE);
+        }
+
+        if (stats.hasPrediction) {
+            prediction.setVisibility(View.VISIBLE);
+            prediction.setText(getString(R.string.stats_prediction, format(stats.predictedNextMonthValue)));
+        } else {
+            prediction.setVisibility(View.GONE);
         }
 
         if (stats.column.goalValue != null && stats.column.goalValue != 0) {

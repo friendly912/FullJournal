@@ -51,6 +51,7 @@
 
     <string name="empty_schedule">この日の予定はありません</string>
     <string name="empty_records">まだ表がありません。右下の+から作成してください</string>
+    <string name="record_gap_warning">%d日間記録がありません</string>
     <string name="empty_rows">まだ記録がありません</string>
 
     <string name="stats_sum">合計: %s</string>
@@ -62,6 +63,12 @@
     <string name="stats_no_anomaly">直近の値に大きな異常は見られません</string>
     <string name="stats_no_data">統計を表示するにはデータが必要です</string>
     <string name="stats_goal_progress">現在: %1$s / 目標: %2$s (%3$d%%)</string>
+    <string name="stats_prediction">来月の予測: 約 %s</string>
+    <string name="stats_summary_title">今月のまとめ</string>
+    <string name="stats_summary_increase">%1$sは先月より%2$d%%増加しました</string>
+    <string name="stats_summary_decrease">%1$sは先月より%2$d%%減少しました</string>
+    <string name="stats_summary_flat">%1$sは先月とほぼ同じです</string>
+    <string name="stats_summary_goal">%1$sは目標の%2$d%%まで到達しています</string>
 
     <string name="dialog_add_column_title">列を追加</string>
     <string name="dialog_add_row_title">記録を追加</string>

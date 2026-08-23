@@ -2,7 +2,8 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/table_header_bg"
     app:cardCornerRadius="8dp"
     app:cardElevation="1dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -10,28 +11,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
         android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/text_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/stats_summary_title"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/text_reminder"
+            android:id="@+id/text_summary_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/anomaly"
-            android:textSize="13sp"
-            android:visibility="gone" />
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_primary" />
 
     </LinearLayout>
 

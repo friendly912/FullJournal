@@ -26,6 +26,14 @@ public class ColumnStats {
     public String latestMonthLabel;
     public double latestMonthValue;
 
+    /** Simple linear-regression forecast of next month's total, when at least 3 months of history exist. */
+    public boolean hasPrediction;
+    public double predictedNextMonthValue;
+
+    /** Percent change of this month's total vs. the previous month's, when both exist. */
+    public boolean hasMonthOverMonthChange;
+    public double monthOverMonthChangePercent;
+
     public ColumnStats(RecordColumn column) {
         this.column = column;
     }

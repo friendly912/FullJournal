@@ -36,6 +36,13 @@
             android:textColor="@color/anomaly"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/text_prediction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_secondary" />
+
         <LinearLayout
             android:id="@+id/layout_goal_progress"
             android:layout_width="match_parent"

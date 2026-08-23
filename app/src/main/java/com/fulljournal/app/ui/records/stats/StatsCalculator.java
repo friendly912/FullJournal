@@ -80,6 +80,8 @@ public class StatsCalculator {
             stats.monthlyTotals.putAll(monthlySum);
 
             applyAnomalyDetection(stats);
+            applyPrediction(stats);
+            applyMonthOverMonthChange(stats);
             result.add(stats);
         }
         return result;
@@ -121,6 +123,48 @@ public class StatsCalculator {
             stats.hasAnomaly = true;
             stats.anomalyHigh = false;
         }
+    }
+
+    /** Least-squares linear regression over monthly totals, forecasting the next month. */
+    private static void applyPrediction(ColumnStats stats) {
+        List<Double> monthValues = new ArrayList<>(stats.monthlyTotals.values());
+        int n = monthValues.size();
+        if (n < 3) {
+            return;
+        }
+
+        double sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+        for (int x = 0; x < n; x++) {
+            double y = monthValues.get(x);
+            sumX += x;
+            sumY += y;
+            sumXY += x * y;
+            sumXX += (double) x * x;
+        }
+        double denominator = n * sumXX - sumX * sumX;
+        if (denominator == 0) {
+            return;
+        }
+        double slope = (n * sumXY - sumX * sumY) / denominator;
+        double intercept = (sumY - slope * sumX) / n;
+
+        stats.hasPrediction = true;
+        stats.predictedNextMonthValue = slope * n + intercept;
+    }
+
+    private static void applyMonthOverMonthChange(ColumnStats stats) {
+        List<Double> monthValues = new ArrayList<>(stats.monthlyTotals.values());
+        int n = monthValues.size();
+        if (n < 2) {
+            return;
+        }
+        double previous = monthValues.get(n - 2);
+        double current = monthValues.get(n - 1);
+        if (previous == 0) {
+            return;
+        }
+        stats.hasMonthOverMonthChange = true;
+        stats.monthOverMonthChangePercent = (current - previous) / previous * 100;
     }
 
     /** Cross-tabs the first NUMBER column against every CHOICE column, month x category. */

@@ -15,8 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulljournal.app.R;
 import com.fulljournal.app.data.AppDatabase;
+import com.fulljournal.app.data.entity.RecordTable;
+import com.fulljournal.app.ui.records.stats.RecordGapDetector;
 import com.fulljournal.app.ui.records.table.TableEditActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecordsFragment extends Fragment {
 
@@ -46,13 +51,30 @@ public class RecordsFragment extends Fragment {
         tableList.setLayoutManager(new LinearLayoutManager(requireContext()));
         tableList.setAdapter(adapter);
 
-        database.recordTableDao().observeAll().observe(getViewLifecycleOwner(), tables -> {
-            adapter.submitList(tables);
-            boolean empty = tables == null || tables.isEmpty();
-            emptyView.setVisibility(empty ? View.VISIBLE : View.GONE);
-            tableList.setVisibility(empty ? View.GONE : View.VISIBLE);
-        });
+        database.recordTableDao().observeAll().observe(getViewLifecycleOwner(), tables ->
+                AppDatabase.databaseExecutor.execute(() -> {
+                    List<TableListItem> items = buildItems(tables);
+                    if (!isAdded()) {
+                        return;
+                    }
+                    requireActivity().runOnUiThread(() -> {
+                        adapter.submitList(items);
+                        boolean empty = items.isEmpty();
+                        emptyView.setVisibility(empty ? View.VISIBLE : View.GONE);
+                        tableList.setVisibility(empty ? View.GONE : View.VISIBLE);
+                    });
+                }));
 
         fab.setOnClickListener(v -> startActivity(new Intent(requireContext(), TableEditActivity.class)));
+    }
+
+    private List<TableListItem> buildItems(List<RecordTable> tables) {
+        List<TableListItem> items = new ArrayList<>();
+        for (RecordTable table : tables) {
+            RecordGapDetector.GapInfo gapInfo =
+                    RecordGapDetector.evaluate(database.recordRowDao().getForTableSync(table.id));
+            items.add(new TableListItem(table, gapInfo));
+        }
+        return items;
     }
 }
